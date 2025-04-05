@@ -78,21 +78,25 @@ int main()
             generate_name(student);
             generate_marks(student);
             grupe.push_back(student);
-            student.Homework_marks.clear();
+            student.clean_homework_marks();
             continue;
         }
 
         cout << "Please input student's name" << endl;
-        cin >> student.name;
+        string name;
+        cin >> name;
+        student.set_name(name);
 
         cout << "Please input student's second name" << endl;
-        cin >> student.second_name;
+        string last_name;
+        cin >> last_name;
+        student.set_last_name(last_name);
 
         if (entered_action == "2")
         {
             generate_marks(student);
             grupe.push_back(student);
-            student.Homework_marks.clear();
+            student.clean_homework_marks();
             continue;
         }
 
@@ -110,7 +114,7 @@ int main()
                     cin >> entered_mark;
                     continue;
                 }
-                student.Homework_marks.push_back(checked_mark);
+                student.set_homework_marks(checked_mark);
             }
             catch (exception)
             {
@@ -134,7 +138,7 @@ int main()
                     cin >> entered_mark;
                     continue;
                 }
-                student.exam_mark = checked_mark;
+                student.set_exam_mark(checked_mark);
                 exam_mark_have_saved = true;
             }
             catch (exception)
@@ -145,7 +149,7 @@ int main()
         }
 
         grupe.push_back(student);
-        student.Homework_marks.clear();
+        student.clean_homework_marks();
     }
 
     if (!grupe.empty())
