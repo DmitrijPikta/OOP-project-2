@@ -32,12 +32,11 @@ private:
 	double second_final_mark_;
 
 public:
-	Stud() : exam_mark_(0) {};
+	Stud() {};
+	Stud(string name, string last_name) : name_(name), last_name_(last_name), exam_mark_(0) {};
 	Stud(std::stringstream &is, int number_of_homework_marks);
 	inline string get_name() const { return name_; };
-	inline void set_name(string name) { name_ = name; };
 	inline string get_last_name() const { return last_name_; };
-	inline void set_last_name(string last_name) { last_name_ = last_name; };
 	inline int get_exam_mark() const { return exam_mark_; };
 	inline void set_exam_mark(int exam_mark) { exam_mark_ = exam_mark; };
 	inline void set_homework_marks(int Homework_mark) { Homework_marks_.push_back(Homework_mark); };

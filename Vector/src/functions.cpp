@@ -481,8 +481,8 @@ Stud::Stud(std::stringstream &is, int number_of_homework_marks)
 	string name, last_name;
 	int mark;
 	is >> name >> last_name;
-	set_name(name);
-	set_last_name(last_name);
+	name_ = name;
+	last_name_ = last_name;
 	for (int i = 0; i < number_of_homework_marks; i++)
 	{
 		is >> mark;

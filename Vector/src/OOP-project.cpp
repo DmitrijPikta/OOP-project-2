@@ -2,7 +2,6 @@
 
 int main()
 {
-    Stud student;
     vector<Stud> grupe;
 
     while (true)
@@ -75,28 +74,27 @@ int main()
 
         if (entered_action == "3")
         {
+            Stud student;
             student.generate_name();
             student.generate_marks();
             grupe.push_back(student);
-            student.clean_homework_marks();
             continue;
         }
 
         cout << "Please input student's name" << endl;
         string name;
         cin >> name;
-        student.set_name(name);
 
         cout << "Please input student's second name" << endl;
         string last_name;
         cin >> last_name;
-        student.set_last_name(last_name);
+
+        Stud student(name, last_name);
 
         if (entered_action == "2")
         {
             student.generate_marks();
             grupe.push_back(student);
-            student.clean_homework_marks();
             continue;
         }
 
@@ -149,7 +147,6 @@ int main()
         }
 
         grupe.push_back(student);
-        student.clean_homework_marks();
     }
 
     if (!grupe.empty())
