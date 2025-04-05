@@ -16,16 +16,16 @@ void Get_final_mark(vector<Stud> &grupe, bool for_average_homework_mark, bool fo
 	{
 		if (for_average_homework_mark && for_both_homework_mark)
 		{
-			grupe[i].final_mark = 0.6 * grupe[i].exam_mark + 0.4 * Get_average_for_homework_mark(grupe[i]);
-			grupe[i].second_final_mark = 0.6 * grupe[i].exam_mark + 0.4 * Get_mediana_for_homework_mark(grupe[i]);
+			grupe[i].set_final_mark(0.6 * grupe[i].get_exam_mark() + 0.4 * grupe[i].Get_average_for_homework_mark());
+			grupe[i].set_second_final_mark(0.6 * grupe[i].get_exam_mark() + 0.4 * grupe[i].Get_mediana_for_homework_mark());
 		}
 		else if (for_average_homework_mark)
 		{
-			grupe[i].final_mark = 0.6 * grupe[i].exam_mark + 0.4 * Get_average_for_homework_mark(grupe[i]);
+			grupe[i].set_final_mark(0.6 * grupe[i].get_exam_mark() + 0.4 * grupe[i].Get_average_for_homework_mark());
 		}
 		else
 		{
-			grupe[i].final_mark = 0.6 * grupe[i].exam_mark + 0.4 * Get_mediana_for_homework_mark(grupe[i]);
+			grupe[i].set_final_mark(0.6 * grupe[i].get_exam_mark() + 0.4 * grupe[i].Get_mediana_for_homework_mark());
 		}
 	}
 	//-----------------------------------------------------------------
@@ -35,13 +35,13 @@ void Get_final_mark(vector<Stud> &grupe, bool for_average_homework_mark, bool fo
 	//-----------------------------------------------------------------
 }
 
-double Get_average_for_homework_mark(Stud student)
+double Stud::Get_average_for_homework_mark()
 {
 	int suma_of_marks = 0;
 	int amount_of_marks = 0;
-	for (int i = 0; i < student.Homework_marks.size(); i++)
+	for (int i = 0; i < Homework_marks_.size(); i++)
 	{
-		suma_of_marks += student.Homework_marks[i];
+		suma_of_marks += Homework_marks_[i];
 		amount_of_marks++;
 	}
 	if (amount_of_marks == 0)
@@ -51,22 +51,22 @@ double Get_average_for_homework_mark(Stud student)
 	return (double)suma_of_marks / amount_of_marks;
 }
 
-double Get_mediana_for_homework_mark(Stud student)
+double Stud::Get_mediana_for_homework_mark()
 {
-	sort(student.Homework_marks.begin(), student.Homework_marks.end());
+	sort(Homework_marks_.begin(), Homework_marks_.end());
 
-	int amount_of_marks = student.Homework_marks.size();
+	int amount_of_marks = Homework_marks_.size();
 	if (amount_of_marks == 0)
 	{
 		return 0;
 	}
 	else if (amount_of_marks % 2 == 0)
 	{
-		return double(student.Homework_marks[(double)amount_of_marks / 2 - 0.5] + student.Homework_marks[(double)amount_of_marks / 2 + 0.5]) / 2;
+		return double(Homework_marks_[(double)amount_of_marks / 2 - 0.5] + Homework_marks_[(double)amount_of_marks / 2 + 0.5]) / 2;
 	}
 	else
 	{
-		return student.Homework_marks[amount_of_marks / 2];
+		return Homework_marks_[amount_of_marks / 2];
 	}
 }
 
@@ -89,7 +89,7 @@ void Print_final_mark(vector<Stud> &grupe, bool for_average_homework_mark, bool 
 	};
 
 	string filename;
-	if (grupe.back().final_mark >= 5)
+	if (grupe.back().get_final_mark() >= 5)
 	{
 		filename = "Best_grupe.txt";
 	}
@@ -151,7 +151,7 @@ void Print_final_mark(vector<Stud> &grupe, bool for_average_homework_mark, bool 
 	{
 		for (int i = 0; i < grupe.size(); i++)
 		{
-			oss << left << setw(size) << grupe[i].second_name << setw(size) << grupe[i].name << fixed << setprecision(2) << grupe[i].final_mark << endl;
+			oss << left << setw(size) << grupe[i].get_last_name() << setw(size) << grupe[i].get_name() << fixed << setprecision(2) << grupe[i].get_final_mark() << endl;
 			output = oss.str();
 			oss.str(""); // Clears the string content
 			oss.clear(); // Reset error flags (e.g., EOF)
@@ -162,7 +162,7 @@ void Print_final_mark(vector<Stud> &grupe, bool for_average_homework_mark, bool 
 	{
 		for (int i = 0; i < grupe.size(); i++)
 		{
-			oss << left << setw(size) << grupe[i].second_name << setw(size) << grupe[i].name << fixed << setprecision(2) << setw(17) << grupe[i].final_mark << grupe[i].second_final_mark << endl;
+			oss << left << setw(size) << grupe[i].get_last_name() << setw(size) << grupe[i].get_name() << fixed << setprecision(2) << setw(17) << grupe[i].get_final_mark() << grupe[i].get_second_final_mark() << endl;
 			output = oss.str();
 			oss.str("");
 			oss.clear();
@@ -182,15 +182,15 @@ int Get_size_for_string_printing(vector<Stud> &grupe)
 	int max_length_of_string = 0;
 	for (int i = 0; i < grupe.size(); i++)
 	{
-		if (grupe[i].name.length() > max_length_of_string || grupe[i].second_name.length() > max_length_of_string)
+		if (grupe[i].get_name().length() > max_length_of_string || grupe[i].get_last_name().length() > max_length_of_string)
 		{
-			if (grupe[i].name.length() > grupe[i].second_name.length())
+			if (grupe[i].get_name().length() > grupe[i].get_last_name().length())
 			{
-				max_length_of_string = grupe[i].name.length();
+				max_length_of_string = grupe[i].get_name().length();
 			}
 			else
 			{
-				max_length_of_string = grupe[i].second_name.length();
+				max_length_of_string = grupe[i].get_last_name().length();
 			}
 		}
 	}
@@ -205,16 +205,16 @@ int Get_size_for_string_printing(vector<Stud> &grupe)
 	}
 }
 
-void generate_marks(Stud &student)
+void Stud::generate_marks()
 {
 	std::random_device rd;							   // Create a random device and seed the generator
 	std::mt19937 gen(rd());							   // Mersenne Twister engine
 	std::uniform_int_distribution<int> distrib(1, 10); // Define range 1 to 10
 	for (int i = 0; i < distrib(gen); i++)
 	{
-		student.Homework_marks.push_back(distrib(gen));
+		Homework_marks_.push_back(distrib(gen));
 	}
-	student.exam_mark = distrib(gen);
+	exam_mark_ = distrib(gen);
 }
 
 void generate_marks(vector<int> &Marks, int number_of_marks)
@@ -228,7 +228,7 @@ void generate_marks(vector<int> &Marks, int number_of_marks)
 	}
 }
 
-void generate_name(Stud &student)
+void Stud::generate_name()
 {
 	vector<string> Names = {
 		"Alice", "Bob", "Charlie", "David", "Emma",
@@ -245,8 +245,8 @@ void generate_name(Stud &student)
 	std::mt19937 gen(rd());
 	std::uniform_int_distribution<int> distrib(0, 19);
 
-	student.name = Names[distrib(gen)];
-	student.second_name = Second_names[distrib(gen)];
+	name_ = Names[distrib(gen)];
+	last_name_ = Second_names[distrib(gen)];
 }
 
 void Sort_students(vector<Stud> &grupe, string parametr)
@@ -257,22 +257,22 @@ void Sort_students(vector<Stud> &grupe, string parametr)
 	if (parametr == "final_mark")
 	{
 		sort(grupe.begin(), grupe.end(), [](const Stud &a, const Stud &b)
-			 { return a.final_mark > b.final_mark; });
+			 { return a.get_final_mark() > b.get_final_mark(); });
 	}
 	else if (parametr == "second_final_mark")
 	{
 		sort(grupe.begin(), grupe.end(), [](const Stud &a, const Stud &b)
-			 { return a.second_final_mark > b.second_final_mark; });
+			 { return a.get_second_final_mark() > b.get_second_final_mark(); });
 	}
 	else if (parametr == "name")
 	{
 		sort(grupe.begin(), grupe.end(), [](const Stud &a, const Stud &b)
-			 { return a.name < b.name; });
+			 { return a.get_name() < b.get_name(); });
 	}
 	else if (parametr == "second_name")
 	{
 		sort(grupe.begin(), grupe.end(), [](const Stud &a, const Stud &b)
-			 { return a.second_name < b.second_name; });
+			 { return a.get_last_name() < b.get_last_name(); });
 	}
 	//-----------------------------------------------------------------
 	auto end = std::chrono::high_resolution_clock::now();
@@ -340,7 +340,7 @@ void Divide_for_two_grupse(vector<Stud> &grupe, vector<Stud> &best_grupe, vector
 	worst_grupe.reserve(grupe.size() * 0.7);
 	for (int i = 0; i < grupe.size(); i++)
 	{
-		if (grupe.at(i).final_mark >= 5)
+		if (grupe.at(i).get_final_mark() >= 5)
 		{
 			best_grupe.push_back(grupe.at(i));
 		}
@@ -368,7 +368,7 @@ void Divide_for_two_grupse(vector<Stud> &grupe, vector<Stud> &worst_grupe)
 	worst_grupe.reserve(grupe.size() * 0.7);
 
 	Sort_students(grupe, "final_mark");
-	while (grupe.back().final_mark < 5)
+	while (grupe.back().get_final_mark() < 5)
 	{
 		worst_grupe.push_back(grupe.back());
 		grupe.pop_back();
@@ -392,12 +392,12 @@ void Divide_for_two_grupse_v3(vector<Stud> &grupe, vector<Stud> &best_grupe, vec
 	worst_grupe.resize(grupe.size());
 
 	auto new_end = std::copy_if(grupe.begin(), grupe.end(), best_grupe.begin(), [](const Stud s)
-								{ return s.final_mark >= 5; });
+								{ return s.get_final_mark() >= 5; });
 
 	best_grupe.resize(std::distance(best_grupe.begin(), new_end));
 
 	new_end = std::copy_if(grupe.begin(), grupe.end(), worst_grupe.begin(), [](const Stud s)
-						   { return s.final_mark < 5; });
+						   { return s.get_final_mark() < 5; });
 
 	worst_grupe.resize(std::distance(worst_grupe.begin(), new_end));
 
@@ -413,7 +413,6 @@ void Divide_for_two_grupse_v3(vector<Stud> &grupe, vector<Stud> &best_grupe, vec
 void Enter_students_using_txt_file_bufer_P(vector<Stud> &grupe)
 {
 	string file_name;
-	Stud student;
 	int mark;
 
 	string element;
@@ -456,15 +455,8 @@ void Enter_students_using_txt_file_bufer_P(vector<Stud> &grupe)
 			while (getline(my_buffer, line))
 			{
 				std::stringstream ss(line);
-				ss >> student.name >> student.second_name;
-				for (int i = 0; i < number_of_homework_marks; i++)
-				{
-					ss >> mark;
-					student.Homework_marks.push_back(mark);
-				}
-				ss >> student.exam_mark;
+				Stud student(ss, number_of_homework_marks);
 				grupe.push_back(student);
-				student.Homework_marks.clear();
 			}
 
 			grupe.shrink_to_fit();
@@ -482,4 +474,20 @@ void Enter_students_using_txt_file_bufer_P(vector<Stud> &grupe)
 		}
 		break;
 	}
+}
+
+Stud::Stud(std::stringstream &is, int number_of_homework_marks)
+{
+	string name, last_name;
+	int mark;
+	is >> name >> last_name;
+	set_name(name);
+	set_last_name(last_name);
+	for (int i = 0; i < number_of_homework_marks; i++)
+	{
+		is >> mark;
+		set_homework_marks(mark);
+	}
+	is >> mark;
+	set_exam_mark(mark);
 }

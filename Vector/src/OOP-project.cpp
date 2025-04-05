@@ -75,8 +75,8 @@ int main()
 
         if (entered_action == "3")
         {
-            generate_name(student);
-            generate_marks(student);
+            student.generate_name();
+            student.generate_marks();
             grupe.push_back(student);
             student.clean_homework_marks();
             continue;
@@ -94,7 +94,7 @@ int main()
 
         if (entered_action == "2")
         {
-            generate_marks(student);
+            student.generate_marks();
             grupe.push_back(student);
             student.clean_homework_marks();
             continue;

@@ -21,16 +21,6 @@ using std::setw;
 using std::string;
 using std::vector;
 
-// struct Stud
-//{
-//	string name;
-//	string second_name;
-//	vector<int> Homework_marks;
-//	int exam_mark;
-//	double final_mark;
-//	double second_final_mark;
-// };
-
 class Stud
 {
 private:
@@ -43,17 +33,23 @@ private:
 
 public:
 	Stud() : exam_mark_(0) {};
-	// Student(std::istream &is);
+	Stud(std::stringstream &is, int number_of_homework_marks);
 	inline string get_name() const { return name_; };
 	inline void set_name(string name) { name_ = name; };
 	inline string get_last_name() const { return last_name_; };
 	inline void set_last_name(string last_name) { last_name_ = last_name; };
 	inline int get_exam_mark() const { return exam_mark_; };
 	inline void set_exam_mark(int exam_mark) { exam_mark_ = exam_mark; };
-	// inline vector<int> get_homework_marks() const { return Homework_marks_; };
 	inline void set_homework_marks(int Homework_mark) { Homework_marks_.push_back(Homework_mark); };
 	inline void clean_homework_marks() { Homework_marks_.clear(); };
-	// double Calulate_final_mark(double (*) (vector<double>) = average) const;
+	inline void set_final_mark(double final_mark) { final_mark_ = final_mark; };
+	inline double get_final_mark() const { return final_mark_; };
+	inline void set_second_final_mark(double second_final_mark) { second_final_mark_ = second_final_mark; };
+	inline double get_second_final_mark() const { return second_final_mark_; };
+	double Get_average_for_homework_mark();
+	double Get_mediana_for_homework_mark();
+	void generate_marks();
+	void generate_name();
 };
 
 extern double time_of_generating_file;
@@ -63,14 +59,10 @@ extern double time_of_sorting;
 extern double time_of_culculating;
 extern double time_of_writing_files;
 
-double Get_average_for_homework_mark(Stud student);
-double Get_mediana_for_homework_mark(Stud student);
 void Get_final_mark(vector<Stud> &grupe, bool for_average_homework_mark, bool for_both_homework_mark);
 void Print_final_mark(vector<Stud> &grupe, bool for_average_homework_mark, bool for_both_homework_mark, bool print_results_in_terminal);
 int Get_size_for_string_printing(vector<Stud> &grupe);
-void generate_marks(Stud &student);
 void generate_marks(vector<int> &Marks, int number_of_marks);
-void generate_name(Stud &student);
 void Sort_students(vector<Stud> &grupe, string parametr);
 bool Generate_file_with_students(int number_of_students, int number_of_marks, string filename);
 void Divide_for_two_grupse(vector<Stud> &grupe, vector<Stud> &best_grupe, vector<Stud> &worst_grupe);
