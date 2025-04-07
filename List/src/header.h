@@ -49,6 +49,7 @@ public:
 	double Get_mediana_for_homework_mark();
 	void generate_marks();
 	void generate_name();
+	~Stud();
 };
 
 extern double time_of_generating_file;

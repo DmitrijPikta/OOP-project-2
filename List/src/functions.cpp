@@ -480,3 +480,9 @@ Stud::Stud(std::stringstream &is, int number_of_homework_marks)
 	is >> mark;
 	set_exam_mark(mark);
 }
+
+Stud::~Stud()
+{
+	Homework_marks_.clear();
+	list<int>().swap(Homework_marks_);
+}
