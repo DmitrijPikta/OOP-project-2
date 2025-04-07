@@ -2,7 +2,6 @@
 
 int main()
 {
-    Stud student;
     deque<Stud> grupe;
 
     while (true)
@@ -75,24 +74,27 @@ int main()
 
         if (entered_action == "3")
         {
-            generate_name(student);
-            generate_marks(student);
+            Stud student;
+            student.generate_name();
+            student.generate_marks();
             grupe.push_back(student);
-            student.Homework_marks.clear();
             continue;
         }
 
         cout << "Please input student's name" << endl;
-        cin >> student.name;
+        string name;
+        cin >> name;
 
         cout << "Please input student's second name" << endl;
-        cin >> student.second_name;
+        string last_name;
+        cin >> last_name;
+
+        Stud student(name, last_name);
 
         if (entered_action == "2")
         {
-            generate_marks(student);
+            student.generate_marks();
             grupe.push_back(student);
-            student.Homework_marks.clear();
             continue;
         }
 
@@ -110,7 +112,7 @@ int main()
                     cin >> entered_mark;
                     continue;
                 }
-                student.Homework_marks.push_back(checked_mark);
+                student.set_homework_marks(checked_mark);
             }
             catch (exception)
             {
@@ -134,7 +136,7 @@ int main()
                     cin >> entered_mark;
                     continue;
                 }
-                student.exam_mark = checked_mark;
+                student.set_exam_mark(checked_mark);
                 exam_mark_have_saved = true;
             }
             catch (exception)
@@ -145,7 +147,6 @@ int main()
         }
 
         grupe.push_back(student);
-        student.Homework_marks.clear();
     }
 
     if (!grupe.empty())

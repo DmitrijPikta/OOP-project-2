@@ -21,14 +21,34 @@ using std::setprecision;
 using std::setw;
 using std::string;
 
-struct Stud
+class Stud
 {
-	string name;
-	string second_name;
-	deque<int> Homework_marks;
-	int exam_mark;
-	double final_mark;
-	double second_final_mark;
+private:
+	string name_;
+	string last_name_;
+	deque<int> Homework_marks_;
+	int exam_mark_;
+	double final_mark_;
+	double second_final_mark_;
+
+public:
+	Stud() {};
+	Stud(string name, string last_name) : name_(name), last_name_(last_name), exam_mark_(0) {};
+	Stud(std::stringstream &is, int number_of_homework_marks);
+	inline string get_name() const { return name_; };
+	inline string get_last_name() const { return last_name_; };
+	inline int get_exam_mark() const { return exam_mark_; };
+	inline void set_exam_mark(int exam_mark) { exam_mark_ = exam_mark; };
+	inline void set_homework_marks(int Homework_mark) { Homework_marks_.push_back(Homework_mark); };
+	inline void clean_homework_marks() { Homework_marks_.clear(); };
+	inline void set_final_mark(double final_mark) { final_mark_ = final_mark; };
+	inline double get_final_mark() const { return final_mark_; };
+	inline void set_second_final_mark(double second_final_mark) { second_final_mark_ = second_final_mark; };
+	inline double get_second_final_mark() const { return second_final_mark_; };
+	double Get_average_for_homework_mark();
+	double Get_mediana_for_homework_mark();
+	void generate_marks();
+	void generate_name();
 };
 
 extern double time_of_generating_file;
@@ -38,14 +58,10 @@ extern double time_of_sorting;
 extern double time_of_culculating;
 extern double time_of_writing_files;
 
-double Get_average_for_homework_mark(Stud student);
-double Get_mediana_for_homework_mark(Stud student);
 void Get_final_mark(deque<Stud> &grupe, bool for_average_homework_mark, bool for_both_homework_mark);
 void Print_final_mark(deque<Stud> &grupe, bool for_average_homework_mark, bool for_both_homework_mark, bool print_results_in_terminal);
 int Get_size_for_string_printing(deque<Stud> &grupe);
-void generate_marks(Stud &student);
 void generate_marks(deque<int> &Marks, int number_of_marks);
-void generate_name(Stud &student);
 void Sort_students(deque<Stud> &grupe, string parametr);
 bool Generate_file_with_students(int number_of_students, int number_of_marks, string filename);
 void Divide_for_two_grupse(deque<Stud> &grupe, deque<Stud> &best_grupe, deque<Stud> &worst_grupe);
