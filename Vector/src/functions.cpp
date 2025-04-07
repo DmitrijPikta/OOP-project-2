@@ -478,11 +478,8 @@ void Enter_students_using_txt_file_bufer_P(vector<Stud> &grupe)
 
 Stud::Stud(std::stringstream &is, int number_of_homework_marks)
 {
-	string name, last_name;
 	int mark;
-	is >> name >> last_name;
-	name_ = name;
-	last_name_ = last_name;
+	is >> name_ >> last_name_;
 	for (int i = 0; i < number_of_homework_marks; i++)
 	{
 		is >> mark;
