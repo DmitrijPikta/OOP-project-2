@@ -494,3 +494,34 @@ Stud::~Stud()
 	Homework_marks_.clear();
 	vector<int>().swap(Homework_marks_);
 }
+
+Stud &Stud::operator=(const Stud &other)
+{
+	if (this != &other)
+	{
+		name_ = other.name_;
+		last_name_ = other.last_name_;
+		Homework_marks_ = other.Homework_marks_;
+		exam_mark_ = other.exam_mark_;
+		final_mark_ = other.final_mark_;
+		second_final_mark_ = other.second_final_mark_;
+	}
+	return *this;
+}
+
+Stud &Stud::operator=(Stud &&other) noexcept
+{
+	if (&other != this)
+	{
+		name_ = move(other.name_);
+		last_name_ = move(other.last_name_);
+		Homework_marks_ = move(other.Homework_marks_);
+		exam_mark_ = other.exam_mark_;
+		final_mark_ = other.final_mark_;
+		second_final_mark_ = other.second_final_mark_;
+		other.exam_mark_ = 0;
+		other.final_mark_ = 0;
+		other.second_final_mark_ = 0;
+	}
+	return *this;
+}

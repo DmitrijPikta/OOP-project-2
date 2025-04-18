@@ -3,12 +3,12 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
+#include <vector>
 #include <random>
 #include <fstream>
 #include <sstream>
 #include <chrono>
 #include <algorithm>
-#include <list>
 
 using std::cin;
 using std::cout;
@@ -16,17 +16,18 @@ using std::endl;
 using std::exception;
 using std::fixed;
 using std::left;
-using std::list;
+using std::move;
 using std::setprecision;
 using std::setw;
 using std::string;
+using std::vector;
 
 class Stud
 {
 private:
 	string name_;
 	string last_name_;
-	list<int> Homework_marks_;
+	vector<int> Homework_marks_;
 	int exam_mark_;
 	double final_mark_;
 	double second_final_mark_;
@@ -35,6 +36,17 @@ public:
 	Stud() {};
 	Stud(string name, string last_name) : name_(name), last_name_(last_name), exam_mark_(0) {};
 	Stud(std::stringstream &is, int number_of_homework_marks);
+	Stud(const Stud &other) : name_(other.name_), last_name_(other.last_name_),
+							  Homework_marks_(other.Homework_marks_), exam_mark_(other.exam_mark_), final_mark_(other.final_mark_), second_final_mark_(other.second_final_mark_) {};
+	Stud(Stud &&other) noexcept : name_(std::move(other.name_)), last_name_(std::move(other.last_name_)),
+								  Homework_marks_(std::move(other.Homework_marks_)), exam_mark_(other.exam_mark_), final_mark_(other.final_mark_), second_final_mark_(other.second_final_mark_)
+	{
+		other.exam_mark_ = 0;
+		other.final_mark_ = 0;
+		other.second_final_mark_ = 0;
+	};
+	Stud &operator=(const Stud &other);
+	Stud &operator=(Stud &&other) noexcept;
 	inline string get_name() const { return name_; };
 	inline string get_last_name() const { return last_name_; };
 	inline int get_exam_mark() const { return exam_mark_; };
@@ -59,13 +71,13 @@ extern double time_of_sorting;
 extern double time_of_culculating;
 extern double time_of_writing_files;
 
-void Get_final_mark(list<Stud> &grupe, bool for_average_homework_mark, bool for_both_homework_mark);
-void Print_final_mark(list<Stud> &grupe, bool for_average_homework_mark, bool for_both_homework_mark, bool print_results_in_terminal);
-int Get_size_for_string_printing(list<Stud> &grupe);
-void generate_marks(list<int> &Marks, int number_of_marks);
-void Sort_students(list<Stud> &grupe, string parametr);
+void Get_final_mark(vector<Stud> &grupe, bool for_average_homework_mark, bool for_both_homework_mark);
+void Print_final_mark(vector<Stud> &grupe, bool for_average_homework_mark, bool for_both_homework_mark, bool print_results_in_terminal);
+int Get_size_for_string_printing(vector<Stud> &grupe);
+void generate_marks(vector<int> &Marks, int number_of_marks);
+void Sort_students(vector<Stud> &grupe, string parametr);
 bool Generate_file_with_students(int number_of_students, int number_of_marks, string filename);
-void Divide_for_two_grupse(list<Stud> &grupe, list<Stud> &best_grupe, list<Stud> &worst_grupe);
-void Divide_for_two_grupse(list<Stud> &grupe, list<Stud> &worst_grupe);
-void Divide_for_two_grupse_v3(list<Stud> &grupe, list<Stud> &best_grupe, list<Stud> &worst_grupe);
-void Enter_students_using_txt_file_bufer_P(list<Stud> &grupe);
+void Divide_for_two_grupse(vector<Stud> &grupe, vector<Stud> &best_grupe, vector<Stud> &worst_grupe);
+void Divide_for_two_grupse(vector<Stud> &grupe, vector<Stud> &worst_grupe);
+void Divide_for_two_grupse_v3(vector<Stud> &grupe, vector<Stud> &best_grupe, vector<Stud> &worst_grupe);
+void Enter_students_using_txt_file_bufer_P(vector<Stud> &grupe);
