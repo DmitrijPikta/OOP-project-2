@@ -472,7 +472,6 @@ Stud::Stud(std::stringstream &is, int number_of_homework_marks)
 Stud::~Stud()
 {
 	Homework_marks_.clear();
-	vector<int>().swap(Homework_marks_);
 }
 
 Stud &Stud::operator=(const Stud &other)
