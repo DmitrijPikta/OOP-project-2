@@ -311,5 +311,6 @@ int main()
     cout << "Time of dividing to best and worst grupe: " << time_of_dividing << endl;
     cout << "Time of writing: " << time_of_writing_files << endl;
     cout << "Time of working with file: " << time_of_reading_file + time_of_culculating + time_of_sorting + time_of_dividing + time_of_writing_files << endl;
+
     return 0;
 }

@@ -30,7 +30,7 @@ private:
 	vector<int> Homework_marks_;
 	int exam_mark_;
 	double final_mark_;
-	double second_final_mark_;
+	double second_final_mark_ = -1;
 
 public:
 	Stud() {};
@@ -38,8 +38,8 @@ public:
 	Stud(std::stringstream &is, int number_of_homework_marks);
 	Stud(const Stud &other) : name_(other.name_), last_name_(other.last_name_),
 							  Homework_marks_(other.Homework_marks_), exam_mark_(other.exam_mark_), final_mark_(other.final_mark_), second_final_mark_(other.second_final_mark_) {};
-	Stud(Stud &&other) noexcept : name_(std::move(other.name_)), last_name_(std::move(other.last_name_)),
-								  Homework_marks_(std::move(other.Homework_marks_)), exam_mark_(other.exam_mark_), final_mark_(other.final_mark_), second_final_mark_(other.second_final_mark_)
+	Stud(Stud &&other) noexcept : name_(move(other.name_)), last_name_(move(other.last_name_)),
+								  Homework_marks_(move(other.Homework_marks_)), exam_mark_(other.exam_mark_), final_mark_(other.final_mark_), second_final_mark_(other.second_final_mark_)
 	{
 		other.exam_mark_ = 0;
 		other.final_mark_ = 0;
@@ -47,6 +47,8 @@ public:
 	};
 	Stud &operator=(const Stud &other);
 	Stud &operator=(Stud &&other) noexcept;
+	friend std::ostream &operator<<(std::ostream &out, const Stud &student);
+	friend std::istream &operator>>(std::istream &in, Stud &student);
 	inline string get_name() const { return name_; };
 	inline string get_last_name() const { return last_name_; };
 	inline int get_exam_mark() const { return exam_mark_; };

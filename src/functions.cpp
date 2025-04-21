@@ -75,18 +75,6 @@ void Print_final_mark(vector<Stud> &grupe, bool for_average_homework_mark, bool 
 	//---------------------------------------------------------------------------
 	auto start = std::chrono::high_resolution_clock::now(); // Time
 	//---------------------------------------------------------------------------
-	string output;
-	auto Print_results = [print_results_in_terminal](string output, std::ofstream &fr)
-	{
-		if (print_results_in_terminal)
-		{
-			cout << output;
-		}
-		else
-		{
-			fr << output;
-		}
-	};
 
 	string filename;
 	if (grupe.back().get_final_mark() >= 5)
@@ -145,31 +133,23 @@ void Print_final_mark(vector<Stud> &grupe, bool for_average_homework_mark, bool 
 		fr << string(size + size + size_of_atribute_for_marks, '-') << endl;
 		fr.close();
 	}
-	std::ofstream fr(filename, std::ios::app);
-	std::ostringstream oss;
-	if (!for_both_homework_mark)
+
+	if (print_results_in_terminal)
 	{
 		for (int i = 0; i < grupe.size(); i++)
 		{
-			oss << left << setw(size) << grupe[i].get_last_name() << setw(size) << grupe[i].get_name() << fixed << setprecision(2) << grupe[i].get_final_mark() << endl;
-			output = oss.str();
-			oss.str(""); // Clears the string content
-			oss.clear(); // Reset error flags (e.g., EOF)
-			Print_results(output, fr);
+			cout << grupe.at(i);
 		}
 	}
 	else
 	{
+		std::ofstream fr(filename, std::ios::app);
 		for (int i = 0; i < grupe.size(); i++)
 		{
-			oss << left << setw(size) << grupe[i].get_last_name() << setw(size) << grupe[i].get_name() << fixed << setprecision(2) << setw(17) << grupe[i].get_final_mark() << grupe[i].get_second_final_mark() << endl;
-			output = oss.str();
-			oss.str("");
-			oss.clear();
-			Print_results(output, fr);
+			fr << grupe.at(i);
 		}
+		fr.close();
 	}
-	fr.close();
 	//-----------------------------------------------------------------
 	auto end = std::chrono::high_resolution_clock::now();
 	std::chrono::duration<double> diff = end - start; // Time
@@ -524,4 +504,73 @@ Stud &Stud::operator=(Stud &&other) noexcept
 		other.second_final_mark_ = 0;
 	}
 	return *this;
+}
+
+std::ostream &operator<<(std::ostream &out, const Stud &student)
+{
+	if (student.second_final_mark_ == -1)
+	{
+		out << left << setw(15) << student.last_name_ << setw(15) << student.name_ << fixed << setprecision(2) << student.final_mark_ << endl;
+	}
+	else
+	{
+		out << left << setw(15) << student.last_name_ << setw(15) << student.name_ << fixed << setprecision(2) << setw(17) << student.final_mark_ << student.second_final_mark_ << endl;
+	}
+	return out;
+}
+
+std::istream &operator>>(std::istream &in, Stud &student)
+{
+	cout << "Please enter name" << endl;
+	in >> student.name_;
+	cout << "Please enter last name" << endl;
+	in >> student.last_name_;
+	cout << "Please input student's one homework mark, when to save it, press enter. To finish entering marks enter double slash '//'" << endl;
+	string entered_mark;
+	in >> entered_mark;
+	while (entered_mark != "//")
+	{
+		try
+		{
+			int checked_mark = stoi(entered_mark);
+			if (checked_mark < 0 || checked_mark > 10)
+			{
+				cout << "Entered simbol can not be a mark" << endl;
+				in >> entered_mark;
+				continue;
+			}
+			student.set_homework_marks(checked_mark);
+		}
+		catch (exception)
+		{
+			cout << "Entered simbol can not be a mark" << endl;
+		}
+		in >> entered_mark;
+	}
+
+	cout << "Please input student's exam mark" << endl;
+	in >> entered_mark;
+	bool exam_mark_have_saved = false;
+	while (!exam_mark_have_saved)
+	{
+		try
+		{
+			int checked_mark = stoi(entered_mark);
+			if (checked_mark < 0 || checked_mark > 10)
+			{
+				cout << "Entered simbol can not be a mark" << endl;
+				in >> entered_mark;
+				continue;
+			}
+			student.set_exam_mark(checked_mark);
+			exam_mark_have_saved = true;
+		}
+		catch (exception)
+		{
+			cout << "Entered simbol can not be a mark" << endl;
+			in >> entered_mark;
+		}
+	}
+
+	return in;
 }
