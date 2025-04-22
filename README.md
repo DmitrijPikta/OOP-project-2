@@ -104,6 +104,7 @@ student.set_final_mark(final_mark);
 student.set_second_final_mark(final_mark);
 ```
 Also to calculate final mark you can use build-in methods to get average or mediana of homeworks marks.
+
 Average:
 ```
 student.Get_average_for_homework_mark();
