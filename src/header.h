@@ -29,7 +29,7 @@ private:
 	string last_name_;
 	vector<int> Homework_marks_;
 	int exam_mark_;
-	double final_mark_;
+	double final_mark_ = 0;
 	double second_final_mark_ = -1;
 
 public:
