@@ -118,8 +118,8 @@ student.Get_mediana_for_homework_mark();
 ```
 Stud student;
 //intup data to student
-student.set_final_mark(student.Get_average_for_homework_mark());
-student.set_second_final_mark(student.Get_mediana_for_homework_mark());
+student.set_final_mark(0.4 * student.Get_average_for_homework_mark() + 0.6 * student.get_exam_mark());
+student.set_second_final_mark(0.4 * student.Get_mediana_for_homework_mark() + 0.6 * student.get_exam_mark());
 ```
 
 
