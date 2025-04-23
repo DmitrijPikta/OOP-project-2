@@ -22,11 +22,24 @@ using std::setw;
 using std::string;
 using std::vector;
 
-class Stud
+class Person
 {
-private:
+protected:
 	string name_;
 	string last_name_;
+
+public:
+	Person() {};
+	Person(string name, string last_name) : name_(name), last_name_(last_name) {};
+	inline string get_name() const { return name_; };
+	inline string get_last_name() const { return last_name_; };
+	virtual void about() const = 0;
+	virtual ~Person() {};
+};
+
+class Stud : public Person
+{
+private:
 	vector<int> Homework_marks_;
 	int exam_mark_;
 	double final_mark_ = 0;
@@ -34,11 +47,11 @@ private:
 
 public:
 	Stud() {};
-	Stud(string name, string last_name) : name_(name), last_name_(last_name), exam_mark_(0) {};
+	Stud(string name, string last_name) : Person(name, last_name), exam_mark_(0) {};
 	Stud(std::stringstream &is, int number_of_homework_marks);
-	Stud(const Stud &other) : name_(other.name_), last_name_(other.last_name_),
+	Stud(const Stud &other) : Person(other.name_, other.last_name_),
 							  Homework_marks_(other.Homework_marks_), exam_mark_(other.exam_mark_), final_mark_(other.final_mark_), second_final_mark_(other.second_final_mark_) {};
-	Stud(Stud &&other) noexcept : name_(move(other.name_)), last_name_(move(other.last_name_)),
+	Stud(Stud &&other) noexcept : Person(move(other.name_), move(other.last_name_)),
 								  Homework_marks_(move(other.Homework_marks_)), exam_mark_(other.exam_mark_), final_mark_(other.final_mark_), second_final_mark_(other.second_final_mark_)
 	{
 		other.exam_mark_ = 0;
@@ -49,8 +62,6 @@ public:
 	Stud &operator=(Stud &&other) noexcept;
 	friend std::ostream &operator<<(std::ostream &out, const Stud &student);
 	friend std::istream &operator>>(std::istream &in, Stud &student);
-	inline string get_name() const { return name_; };
-	inline string get_last_name() const { return last_name_; };
 	inline int get_exam_mark() const { return exam_mark_; };
 	inline void set_exam_mark(int exam_mark) { exam_mark_ = exam_mark; };
 	inline void set_homework_marks(int Homework_mark) { Homework_marks_.push_back(Homework_mark); };
@@ -63,6 +74,7 @@ public:
 	double Get_mediana_for_homework_mark();
 	void generate_marks();
 	void generate_name();
+	inline void about() const override { cout << "I am a student" << endl; };
 	~Stud();
 };
 
