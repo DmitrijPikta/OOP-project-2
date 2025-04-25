@@ -12,6 +12,13 @@ Person class have two string variables: name_ and least_name_. Also have followi
 Person class is abstract class. To make derived class, from Person class, non abstract, it is necessary to override function about().
 
 # Stud class 
+Stud class is derived from Person class. 
+
+Function about() is overrided in Stud class to make it non abstruct:
+```
+inline void about() const override { cout << "I am a student" << endl; };
+```
+
 ## Rule of five:
 |Method                   |Syntax                             |
 |-------------------------|-----------------------------------|
