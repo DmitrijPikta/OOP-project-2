@@ -1,3 +1,16 @@
+# Person class
+Person class have two string variables: name_ and least_name_. Also have following methods:
+|Method                               |Syntax                                |
+|-------------------------------------|--------------------------------------|
+|Default constructor                  |Person()                              |
+|Constructor for name_ and last_name_ |Person(string name, string last_name) |
+|Getter for name_                     |inline string get_name()              |
+|Gettor for last_name_                |inline string get_last_name()         |
+|Virtual function about()             |virtual void about()                  |
+|Default destructor                   |virtual ~Person()                     |
+
+Person class is abstract class. To make derived class, from Person class, non abstract, it is necessary to override function about().
+
 # Stud class 
 ## Rule of five:
 |Method                   |Syntax                             |
