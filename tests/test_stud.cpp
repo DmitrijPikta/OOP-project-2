@@ -136,6 +136,27 @@ void test_output_operator_stream()
     cout << "test_output_operator_stream passed!" << endl;
 }
 
+void test_destructor()
+{
+    // Create a Stud object
+    Stud student("Ivan", "Smirnov");
+    student.set_homework_marks(5);
+    student.set_exam_mark(10);
+    student.set_final_mark(0.6 * student.get_exam_mark() + 0.4 * student.Get_average_for_homework_mark());
+    student.set_second_final_mark(0.6 * student.get_exam_mark() + 0.4 * student.Get_mediana_for_homework_mark());
+
+    // Call destructor for Stud object
+    student.~Stud();
+
+    // Verify that the data was removed
+    assert(student.get_name() == "");
+    assert(student.get_last_name() == "");
+    assert(student.get_exam_mark() == 0);
+    assert(student.Get_average_for_homework_mark() == 0);
+    assert(student.get_final_mark() == 0);
+    assert(student.get_second_final_mark() == 0);
+}
+
 int main()
 {
     test_operator_assignment();
@@ -144,5 +165,6 @@ int main()
     test_move_assignment();
     test_input_operator_stream();
     test_output_operator_stream();
+    test_destructor();
     return 0;
 }
