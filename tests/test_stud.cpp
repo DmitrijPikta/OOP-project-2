@@ -35,7 +35,7 @@ void test_copy_constructor()
     student1.set_homework_marks(8);
 
     // Use the copy constructor
-    Stud student2 = student1;
+    Stud student2(student1);
 
     // Verify that student2 has the same data as student1
     assert(student2.get_name() == "Alice");
@@ -55,7 +55,7 @@ void test_move_constructor()
     student1.set_homework_marks(8);
 
     // Use the move constructor
-    Stud student2 = move(student1);
+    Stud student2(move(student1));
 
     // Verify that student2 has the same data as student1
     assert(student2.get_name() == "Bob");
