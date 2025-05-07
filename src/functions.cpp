@@ -471,6 +471,11 @@ Stud::Stud(std::stringstream &is, int number_of_homework_marks)
 
 Stud::~Stud()
 {
+	name_ = "";
+	last_name_ = "";
+	exam_mark_ = 0;
+	final_mark_ = 0;
+	second_final_mark_ = 0;
 	Homework_marks_.clear();
 }
 
