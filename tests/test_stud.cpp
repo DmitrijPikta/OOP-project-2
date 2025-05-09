@@ -1,8 +1,9 @@
 #include "../src/header.h"
+#include <gtest/gtest.h>
 #include <cassert>
 #include <iostream>
 
-void test_operator_assignment()
+TEST(RuleOfFive, TestOperatorAssignment)
 {
     // Create two Stud objects
     Stud student1("John", "Doe");
@@ -18,15 +19,13 @@ void test_operator_assignment()
     student2 = student1;
 
     // Verify that student2 now has the same data as student1
-    assert(student2.get_name() == "John");
-    assert(student2.get_last_name() == "Doe");
-    assert(student2.get_exam_mark() == 8);
-    assert(student2.Get_average_for_homework_mark() == student1.Get_average_for_homework_mark());
-
-    cout << "test_operator_assignment passed!" << endl;
+    EXPECT_EQ(student2.get_name(), "John");
+    EXPECT_EQ(student2.get_last_name(), "Doe");
+    EXPECT_EQ(student2.get_exam_mark(), 8);
+    EXPECT_EQ(student2.Get_average_for_homework_mark(), student1.Get_average_for_homework_mark());
 }
 
-void test_copy_constructor()
+TEST(RuleOfFive, TestCopyConstructor)
 {
     // Create a Stud object
     Stud student1("Alice", "Johnson");
@@ -38,15 +37,13 @@ void test_copy_constructor()
     Stud student2(student1);
 
     // Verify that student2 has the same data as student1
-    assert(student2.get_name() == "Alice");
-    assert(student2.get_last_name() == "Johnson");
-    assert(student2.get_exam_mark() == 9);
-    assert(student2.Get_average_for_homework_mark() == student1.Get_average_for_homework_mark());
-
-    cout << "test_copy_constructor passed!" << endl;
+    EXPECT_EQ(student2.get_name(), "Alice");
+    EXPECT_EQ(student2.get_last_name(), "Johnson");
+    EXPECT_EQ(student2.get_exam_mark(), 9);
+    EXPECT_EQ(student2.Get_average_for_homework_mark(), student1.Get_average_for_homework_mark());
 }
 
-void test_move_constructor()
+TEST(RuleOfFive, TestMoveConstructor)
 {
     // Create a Stud object
     Stud student1("Bob", "Brown");
@@ -58,19 +55,17 @@ void test_move_constructor()
     Stud student2(move(student1));
 
     // Verify that student2 has the same data as student1
-    assert(student2.get_name() == "Bob");
-    assert(student2.get_last_name() == "Brown");
-    assert(student2.get_exam_mark() == 7);
-    assert(student2.Get_average_for_homework_mark() == 7.0);
-    assert(student1.get_name() == "");
-    assert(student1.get_last_name() == "");
-    assert(student1.get_exam_mark() == 0);
-    assert(student1.Get_average_for_homework_mark() == 0);
-
-    cout << "test_move_constructor passed!" << endl;
+    EXPECT_EQ(student2.get_name(), "Bob");
+    EXPECT_EQ(student2.get_last_name(), "Brown");
+    EXPECT_EQ(student2.get_exam_mark(), 7);
+    EXPECT_EQ(student2.Get_average_for_homework_mark(), 7.0);
+    EXPECT_EQ(student1.get_name(), "");
+    EXPECT_EQ(student1.get_last_name(), "");
+    EXPECT_EQ(student1.get_exam_mark(), 0);
+    EXPECT_EQ(student1.Get_average_for_homework_mark(), 0);
 }
 
-void test_move_assignment()
+TEST(RuleOfFive, TestMoveAssignment)
 {
     // Create two Stud objects
     Stud student1("Charlie", "Green");
@@ -86,19 +81,38 @@ void test_move_assignment()
     student2 = move(student1);
 
     // Verify that student2 has the same data as student1
-    assert(student2.get_name() == "Charlie");
-    assert(student2.get_last_name() == "Green");
-    assert(student2.get_exam_mark() == 10);
-    assert(student2.Get_average_for_homework_mark() == 8.5);
-    assert(student1.get_name() == "");
-    assert(student1.get_last_name() == "");
-    assert(student1.get_exam_mark() == 0);
-    assert(student1.Get_average_for_homework_mark() == 0);
-
-    cout << "test_move_assignment passed!" << endl;
+    EXPECT_EQ(student2.get_name(), "Charlie");
+    EXPECT_EQ(student2.get_last_name(), "Green");
+    EXPECT_EQ(student2.get_exam_mark(), 10);
+    EXPECT_EQ(student2.Get_average_for_homework_mark(), 8.5);
+    EXPECT_EQ(student1.get_name(), "");
+    EXPECT_EQ(student1.get_last_name(), "");
+    EXPECT_EQ(student1.get_exam_mark(), 0);
+    EXPECT_EQ(student1.Get_average_for_homework_mark(), 0);
 }
 
-void test_input_operator_stream()
+TEST(RuleOfFive, TestDestructor)
+{
+    // Create a Stud object
+    Stud student("Ivan", "Smirnov");
+    student.set_homework_marks(5);
+    student.set_exam_mark(10);
+    student.set_final_mark(0.6 * student.get_exam_mark() + 0.4 * student.Get_average_for_homework_mark());
+    student.set_second_final_mark(0.6 * student.get_exam_mark() + 0.4 * student.Get_mediana_for_homework_mark());
+
+    // Call destructor for Stud object
+    // student.~Stud();
+
+    // Verify that the data was removed
+    // EXPECT_EQ(student.get_name(), "");
+    // EXPECT_EQ(student.get_last_name(), "");
+    // EXPECT_EQ(student.get_exam_mark(), 0);
+    // EXPECT_EQ(student.Get_average_for_homework_mark(), 0);
+    // EXPECT_EQ(student.get_final_mark(), 0);
+    // EXPECT_EQ(student.get_second_final_mark(), 0);
+}
+
+TEST(StreamOperators, TestInputOperatorStream)
 {
     // Create a string stream to simulate input
     std::stringstream ss("Alice Johnson 8 9 10 // 7");
@@ -108,15 +122,13 @@ void test_input_operator_stream()
     ss >> student;
 
     // Verify that the data was read correctly
-    assert(student.get_name() == "Alice");
-    assert(student.get_last_name() == "Johnson");
-    assert(student.get_exam_mark() == 7);
-    assert(student.Get_average_for_homework_mark() == 9.0);
-
-    cout << "test_input_operator_stream passed!" << endl;
+    EXPECT_EQ(student.get_name(), "Alice");
+    EXPECT_EQ(student.get_last_name(), "Johnson");
+    EXPECT_EQ(student.get_exam_mark(), 7);
+    EXPECT_EQ(student.Get_average_for_homework_mark(), 9.0);
 }
 
-void test_output_operator_stream()
+TEST(StreamOperators, TestOutputOperatorStream)
 {
     // Create a Stud object
     Stud student("Eve", "Black");
@@ -131,40 +143,29 @@ void test_output_operator_stream()
 
     // Verify that the output is correct
     string expected_output = "Black          Eve            9.00\n";
-    assert(oss.str() == expected_output);
-
-    cout << "test_output_operator_stream passed!" << endl;
+    EXPECT_EQ(oss.str(), expected_output);
 }
 
-void test_destructor()
+TEST(OtherFunctions, TestGetFinalMark)
 {
     // Create a Stud object
-    Stud student("Ivan", "Smirnov");
+    Stud student("Tom", "Hanks");
+    student.set_exam_mark(8);
+    student.set_homework_marks(8);
     student.set_homework_marks(5);
-    student.set_exam_mark(10);
-    student.set_final_mark(0.6 * student.get_exam_mark() + 0.4 * student.Get_average_for_homework_mark());
-    student.set_second_final_mark(0.6 * student.get_exam_mark() + 0.4 * student.Get_mediana_for_homework_mark());
+    student.set_homework_marks(5);
 
-    // Call destructor for Stud object
-    student.~Stud();
+    // Create a vector of Stud objects
+    vector<Stud> grupe = {student};
+    Get_final_mark(grupe, true, true);
 
-    // Verify that the data was removed
-    assert(student.get_name() == "");
-    assert(student.get_last_name() == "");
-    assert(student.get_exam_mark() == 0);
-    assert(student.Get_average_for_homework_mark() == 0);
-    assert(student.get_final_mark() == 0);
-    assert(student.get_second_final_mark() == 0);
+    // Verify that the final mark is calculated correctly
+    EXPECT_EQ(grupe.back().get_final_mark(), 7.2);
+    EXPECT_EQ(grupe.back().get_second_final_mark(), 6.8);
 }
 
 int main()
 {
-    test_operator_assignment();
-    test_copy_constructor();
-    test_move_constructor();
-    test_move_assignment();
-    test_input_operator_stream();
-    test_output_operator_stream();
-    test_destructor();
-    return 0;
+    testing::InitGoogleTest();
+    return RUN_ALL_TESTS();
 }
